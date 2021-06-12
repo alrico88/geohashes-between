@@ -1,8 +1,12 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": "geohashes-between",
   "author": "Alberto Rico",
-  "keywords": ["geohashes", "between", "direction"],
+  "keywords": [
+    "geohashes",
+    "between",
+    "direction"
+  ],
   "repository": {
     "url": "https://github.com/alrico88/geohashes-between"
   },
