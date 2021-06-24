@@ -1,6 +1,6 @@
 # geohashes-between
 
-Get a list of geohashes between a starting and end geohash, in a desired direction
+Get a list of geohashes between two geohashes, or between two coordinates.
 
 ## Installation
 
@@ -13,62 +13,66 @@ Using yarn, `yarn add geohashes-between`.
 Using `import`
 
 ```javascript
-import { getGeohashesBetween } from 'geohashes-between';
+import { getGeohashesBetweenTwoGeohashes } from 'geohashes-between';
 ```
 
 In a CommonJS environment
 
 ```javascript
-const { getGeohashesBetween } = require('geohashes-between');
+const { getGeohashesBetweenTwoGeohashes } = require('geohashes-between');
 ```
 
 Then:
 
 ```javascript
-const list = getGeohashesBetween('ezep', 'ezex', 'e');
+const list = getGeohashesBetweenTwoGeohashes('ezep', 'ezex');
 // list is ['ezer']
 ```
 
 ## Table of contents
 
-### Type aliases
-
-- [Direction](modules.md#direction)
-
 ### Functions
 
-- [getGeohashesBetween](modules.md#getgeohashesbetween)
-
-## Type aliases
-
-### Direction
-
-Ƭ **Direction**: `"n"` \| `"ne"` \| `"nw"` \| `"s"` \| `"se"` \| `"sw"` \| `"e"` \| `"w"`
-
-Defined in: index.ts:3
+- [getGeohashesBetweenCoordinates](modules.md#getgeohashesbetweencoordinates)
+- [getGeohashesBetweenTwoGeohashes](modules.md#getgeohashesbetweentwogeohashes)
 
 ## Functions
 
-### getGeohashesBetween
+### getGeohashesBetweenCoordinates
 
-▸ **getGeohashesBetween**(`geohashStart`: _string_, `geohashEnd`: _string_, `direction`: [_Direction_](modules.md#direction), `includeStartEnd?`: _boolean_): _string_[]
+▸ **getGeohashesBetweenCoordinates**(`pointA`: Position, `pointB`: Position, `precision`: _number_): _string_[]
 
-Gets a list of geohashes between a starting and end geohash, in a given direction
-Be careful if both geohashes are not in the same grid, as this function will run indefinitely
-
-**`export`**
+Finds the geohashes of a given precision between two coordinates
 
 #### Parameters
 
-| Name              | Type                                | Default value | Description                                                                      |
-| :---------------- | :---------------------------------- | :------------ | :------------------------------------------------------------------------------- |
-| `geohashStart`    | _string_                            | -             | The starting geohash                                                             |
-| `geohashEnd`      | _string_                            | -             | The ending geohash                                                               |
-| `direction`       | [_Direction_](modules.md#direction) | -             | The direction to use to calculate the next neighboring geohash between those two |
-| `includeStartEnd` | _boolean_                           | false         | -                                                                                |
+| Name        | Type     | Description                    |
+| :---------- | :------- | :----------------------------- |
+| `pointA`    | Position | Starting coordinate [lon, lat] |
+| `pointB`    | Position | End coordinate [lon, lat]      |
+| `precision` | _number_ | Desired geohash precision      |
+
+**Returns:** _string_[]
+
+The list of geohashes between those coords
+
+---
+
+### getGeohashesBetweenTwoGeohashes
+
+▸ **getGeohashesBetweenTwoGeohashes**(`geohashStart`: _string_, `geohashEnd`: _string_, `includeStartEnd?`: _boolean_): _string_[]
+
+Gets a list of geohashes between a starting and end geohash
+Both geohashes should be of the same precision
+
+#### Parameters
+
+| Name              | Type      | Default value | Description                                                         |
+| :---------------- | :-------- | :------------ | :------------------------------------------------------------------ |
+| `geohashStart`    | _string_  | -             | The starting geohash                                                |
+| `geohashEnd`      | _string_  | -             | The ending geohash                                                  |
+| `includeStartEnd` | _boolean_ | false         | Whether to include starting and ending geohash in the returned list |
 
 **Returns:** _string_[]
 
 The list of geohashes between start and end
-
-Defined in: index.ts:27
