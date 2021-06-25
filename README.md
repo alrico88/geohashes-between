@@ -29,12 +29,22 @@ const list = getGeohashesBetweenTwoGeohashes('ezep', 'ezex');
 // list is ['ezer']
 ```
 
+Or:
+
+```javascript
+const pointA = [-3.684166, 40.416763];
+const pointB = [-3.720741, 40.364335];
+
+const list = getGeohashesBetweenCoordinates(pointA, pointB, 6);
+// list is ['ezjmuj', 'ezjmuh','ezjmu5', 'ezjmgg','ezjmgf', 'ezjmgc','ezjmgb', 'ezjmg8','ezjmex', 'ezjmew','ezjmeq', 'ezjmem','ezjmek']
+```
+
 ## Table of contents
 
 ### Functions
 
-- [getGeohashesBetweenCoordinates](modules.md#getgeohashesbetweencoordinates)
-- [getGeohashesBetweenTwoGeohashes](modules.md#getgeohashesbetweentwogeohashes)
+- [getGeohashesBetweenCoordinates](#getgeohashesbetweencoordinates)
+- [getGeohashesBetweenTwoGeohashes](#getgeohashesbetweentwogeohashes)
 
 ## Functions
 

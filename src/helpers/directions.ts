@@ -1,4 +1,4 @@
-import {NSEW} from 'ngeohash';
+import {neighbor, NSEW} from 'ngeohash';
 
 export type Direction = 'n' | 'ne' | 'nw' | 's' | 'se' | 'sw' | 'e' | 'w';
 
@@ -21,7 +21,7 @@ export const directions: Record<Direction, NSEW> = {
  * @param {number} max Maximum
  * @return {boolean} Response
  */
-function isBetween(n: number, min: number, max: number): boolean {
+export function isBetween(n: number, min: number, max: number): boolean {
   return n >= min && n <= max;
 }
 
@@ -42,4 +42,16 @@ export function getDirectionsInBearing(bearing: number): Direction[] {
   } else {
     return ['w', 'nw', 'n'];
   }
+}
+
+/**
+ * Gets a geohash neighbor in a given direction
+ *
+ * @export
+ * @param {string} geohash The geohash to find neighbor of
+ * @param {Direction} direction The direction in which to look
+ * @return {string} The neighbor
+ */
+ export function getGeohashNeighborInDirection(geohash: string, direction: Direction): string {
+  return neighbor(geohash, directions[direction]);
 }

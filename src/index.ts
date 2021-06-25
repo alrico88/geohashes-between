@@ -1,39 +1,22 @@
-import {decode, encode, neighbor} from 'ngeohash';
+/* eslint-disable no-console */
+import {decode, encode} from 'ngeohash';
 import {LineString, Position} from '@turf/helpers';
-import {Direction, directions, getDirectionsInBearing} from './helpers/directions';
+import {getGeohashNeighborInDirection, getDirectionsInBearing} from './helpers/directions';
 import {getBearingBetweenPoints} from './helpers/bearing';
 import {lineCrossesBBox} from './helpers/clip';
 import {getGeohashBBox} from 'bbox-helper-functions';
-
-/**
- * Gets a geohash neighbor in a given direction
- *
- * @param {string} geohash The geohash to find neighbor of
- * @param {Direction} direction The direction in which to look
- * @return {string} The neighbor
- */
-function getGeohashNeighborInDirection(geohash: string, direction: Direction): string {
-  return neighbor(geohash, directions[direction]);
-}
+import {validatePrecision, validateSamePrecisionGeohashes} from './helpers/validator';
+import {cloneArray} from './helpers/clone';
 
 /**
  * Processes a batch of geohashes to see if they intersect a line
  *
  * @param {LineString} lineString A LineString to check if any of the batches geohashes crosses
- * @param {Direction[]} directionsToLookIn What direction to look neighbors in
  * @param {string[]} latestBatch The batch of geohashes to find neighbors of
  * @return {string[]} The list of geohashes that do intersect
  */
-function processBatch(lineString: LineString, directionsToLookIn: Direction[], latestBatch: string[]): string[] {
-  const geohashesToCheck = latestBatch.reduce((agg, geohash) => {
-    directionsToLookIn.forEach((direction) => {
-      agg.push(getGeohashNeighborInDirection(geohash, direction));
-    });
-
-    return agg;
-  }, [] as string[]);
-
-  return geohashesToCheck.filter((geohash) => lineCrossesBBox(lineString, getGeohashBBox(geohash)));
+function processBatch(lineString: LineString, latestBatch: string[]): string[] {
+  return latestBatch.filter((geohash) => lineCrossesBBox(lineString, getGeohashBBox(geohash)));
 }
 
 /**
@@ -46,6 +29,8 @@ function processBatch(lineString: LineString, directionsToLookIn: Direction[], l
  * @return {string[]} The list of geohashes between those coords
  */
 export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Position, precision: number): string[] {
+  validatePrecision(precision);
+
   const lineString: LineString = {
     type: 'LineString',
     coordinates: [pointA, pointB],
@@ -62,15 +47,28 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
     [startingGeohash]: true,
   };
 
-  let latestBatch: string[] = [startingGeohash];
+  let latestBatch: string[] = neighborsToLookFor.map((direction) => getGeohashNeighborInDirection(startingGeohash, direction));
 
   while (geohashesAlong[endingGeohash] !== true) {
-    const batchResults = processBatch(lineString, neighborsToLookFor, latestBatch);
+    const batchResults = processBatch(lineString, latestBatch);
+
+    const doNotCheckAgain: string[] = cloneArray(latestBatch);
+
+    const nextBatch: Set<string> = new Set();
+
     batchResults.forEach((geohash) => {
       geohashesAlong[geohash] = true;
+
+      neighborsToLookFor.forEach((direction) => {
+        const lookFor = getGeohashNeighborInDirection(geohash, direction);
+
+        if (!doNotCheckAgain.includes(lookFor)) {
+          nextBatch.add(lookFor);
+        }
+      });
     });
 
-    latestBatch = batchResults;
+    latestBatch = Array.from(nextBatch);
   }
 
   return Object.keys(geohashesAlong);
@@ -87,9 +85,7 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
  * @return {string[]} The list of geohashes between start and end
  */
  export function getGeohashesBetweenTwoGeohashes(geohashStart: string, geohashEnd: string, includeStartEnd = false): string[] {
-  if (geohashStart.length !== geohashEnd.length) {
-    throw new Error('Both geohashes should be of the same length');
-  }
+  validateSamePrecisionGeohashes(geohashStart, geohashEnd);
 
   const pointA = decode(geohashStart);
   const pointB = decode(geohashEnd);
