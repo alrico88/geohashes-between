@@ -33,15 +33,13 @@ function isBetween(n: number, min: number, max: number): boolean {
  * @return {Direction[]} Array of NSEW strings for that direction
  */
 export function getDirectionsInBearing(bearing: number): Direction[] {
-  if (isBetween(bearing, 0, 45)) {
-    return ['nw', 'n', 'ne'];
-  } else if (isBetween(bearing, 45, 135)) {
-    return ['ne', 'e', 'se'];
-  } else if (isBetween(bearing, 135, 225)) {
-    return ['se', 's', 'sw'];
-  } else if (isBetween(bearing, 225, 315)) {
-    return ['sw', 'w', 'nw'];
+  if (isBetween(bearing, 0, 90)) {
+    return ['n', 'ne', 'e'];
+  } else if (isBetween(bearing, 90, 180)) {
+    return ['e', 'se', 's'];
+  } else if (isBetween(bearing, 180, 270)) {
+    return ['s', 'sw', 'w'];
   } else {
-    return ['nw', 'n', 'ne'];
+    return ['w', 'nw', 'n'];
   }
 }
