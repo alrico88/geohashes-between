@@ -1,8 +1,8 @@
-import {neighbor, NSEW} from 'ngeohash';
+import ngeohash from 'ngeohash';
 
 export type Direction = 'n' | 'ne' | 'nw' | 's' | 'se' | 'sw' | 'e' | 'w';
 
-export const directions: Record<Direction, NSEW> = {
+export const directions: Record<Direction, ngeohash.NSEW> = {
   n: [1, 0],
   ne: [1, 1],
   nw: [1, -1],
@@ -53,5 +53,5 @@ export function getDirectionsInBearing(bearing: number): Direction[] {
  * @return {string} The neighbor
  */
  export function getGeohashNeighborInDirection(geohash: string, direction: Direction): string {
-  return neighbor(geohash, directions[direction]);
+  return ngeohash.neighbor(geohash, directions[direction]);
 }

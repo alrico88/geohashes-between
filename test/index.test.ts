@@ -1,4 +1,6 @@
+import {describe, test, expect} from 'vitest';
 import {getGeohashesBetweenCoordinates, getGeohashesBetweenTwoGeohashes} from '../src';
+
 
 describe('Test getting geohashes in between two geohashes', () => {
   test('Start and end geohashes should not be included in results by default', () => {

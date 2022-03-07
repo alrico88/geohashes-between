@@ -12,29 +12,33 @@
   },
   "sideEffects": false,
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/geohashes-between.esm.js",
-  "typings": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist",
     "src"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "docs": "typedoc src/index.ts --readme",
-    "coveralls": "tsdx test --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "start": "pnpm run build -- --watch src",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --cache --fix --ignore-path .gitignore --ext .ts,.js src",
+    "prepare": "pnpm run build",
+    "docs": "typedoc src/index.ts --readme README.md --gitRevision master",
+    "coveralls": "vitest run --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "pnpm run lint"
     }
   },
   "prettier": {
@@ -45,24 +49,26 @@
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.7",
-    "@types/ngeohash": "^0.6.2",
+    "@types/ngeohash": "^0.6.4",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.23.0",
     "husky": "^6.0.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.1.0",
-    "typedoc": "^0.20.34",
-    "typedoc-plugin-markdown": "^3.6.0",
-    "typescript": "^4.2.3"
+    "tslib": "^2.3.1",
+    "tsup": "^5.12.0",
+    "typedoc": "^0.22.13",
+    "typedoc-plugin-markdown": "^3.11.14",
+    "typescript": "^4.6.2",
+    "vite": "^2.8.6",
+    "vitest": "^0.6.0"
   },
   "dependencies": {
-    "@turf/bearing": "^6.4.0",
-    "@turf/helpers": "^6.4.0",
-    "bbox-helper-functions": "^3.0.0",
+    "@turf/bearing": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
+    "bbox-helper-functions": "^3.2.2",
     "lineclip": "^1.1.5",
     "ngeohash": "^0.6.3",
-    "number-helper-functions": "^4.0.0"
+    "number-helper-functions": "^4.1.1"
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import {decode, encode} from 'ngeohash';
+import ngeohash from 'ngeohash';
 import {LineString, Position} from '@turf/helpers';
 import {getGeohashNeighborInDirection, getDirectionsInBearing} from './helpers/directions';
 import {getBearingBetweenPoints} from './helpers/bearing';
@@ -40,8 +40,8 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
 
   const neighborsToLookFor = getDirectionsInBearing(bearing);
 
-  const startingGeohash = encode(pointA[1], pointA[0], precision);
-  const endingGeohash = encode(pointB[1], pointB[0], precision);
+  const startingGeohash = ngeohash.encode(pointA[1], pointA[0], precision);
+  const endingGeohash = ngeohash.encode(pointB[1], pointB[0], precision);
 
   const geohashesAlong: Record<string, boolean> = {
     [startingGeohash]: true,
@@ -87,8 +87,8 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
  export function getGeohashesBetweenTwoGeohashes(geohashStart: string, geohashEnd: string, includeStartEnd = false): string[] {
   validateSamePrecisionGeohashes(geohashStart, geohashEnd);
 
-  const pointA = decode(geohashStart);
-  const pointB = decode(geohashEnd);
+  const pointA = ngeohash.decode(geohashStart);
+  const pointB = ngeohash.decode(geohashEnd);
 
   const geohashesBetween = getGeohashesBetweenCoordinates([pointA.longitude, pointA.latitude], [pointB.longitude, pointB.latitude], geohashStart.length);
 
