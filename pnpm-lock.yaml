@@ -7,7 +7,6 @@ specifiers:
   '@types/ngeohash': ^0.6.4
   '@typescript-eslint/eslint-plugin': ^4.17.0
   '@typescript-eslint/parser': ^4.17.0
-  bbox-helper-functions: ^3.2.2
   coveralls: ^3.1.0
   eslint: ^7.23.0
   husky: ^6.0.0
@@ -25,7 +24,6 @@ specifiers:
 dependencies:
   '@turf/bearing': 6.5.0
   '@turf/helpers': 6.5.0
-  bbox-helper-functions: 3.2.2
   lineclip: 1.1.5
   ngeohash: 0.6.3
   number-helper-functions: 4.1.1
@@ -104,18 +102,6 @@ packages:
       fastq: 1.11.0
     dev: true
 
-  /@sindresorhus/is/4.6.0:
-    resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
-    engines: {node: '>=10'}
-    dev: false
-
-  /@turf/bbox/6.5.0:
-    resolution: {integrity: sha512-RBbLaao5hXTYyyg577iuMtDB8ehxMlUqHEJiMs8jT1GHkFhr6sYre3lmLsPeYEi/ZKj5TP5tt7fkzNdJ4GIVyw==}
-    dependencies:
-      '@turf/helpers': 6.5.0
-      '@turf/meta': 6.5.0
-    dev: false
-
   /@turf/bearing/6.5.0:
     resolution: {integrity: sha512-dxINYhIEMzgDOztyMZc20I7ssYVNEpSv04VbMo5YPQsqa80KO3TFvbuCahMsCAW5z8Tncc8dwBlEFrmRjJG33A==}
     dependencies:
@@ -129,12 +115,6 @@ packages:
 
   /@turf/invariant/6.5.0:
     resolution: {integrity: sha512-Wv8PRNCtPD31UVbdJE/KVAWKe7l6US+lJItRR/HOEW3eh+U/JwRCSUl/KZ7bmjM/C+zLNoreM2TU6OoLACs4eg==}
-    dependencies:
-      '@turf/helpers': 6.5.0
-    dev: false
-
-  /@turf/meta/6.5.0:
-    resolution: {integrity: sha512-RrArvtsV0vdsCBegoBtOalgdSOfkBrTJ07VkpiCnq/491W67hnMWmDu7e6Ztw0C3WldRYTXkg3SumfdzZxLBHA==}
     dependencies:
       '@turf/helpers': 6.5.0
     dev: false
@@ -382,18 +362,6 @@ packages:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
 
-  /bbox-helper-functions/3.2.2:
-    resolution: {integrity: sha512-nZhxVlkzjKOijHqki9Z6TtdYtvTAOd+MfSEbGh67XX3qdexEdgDjWkzJbLlL6NGlx4pQred4yEPT8QP1Jkva7w==}
-    dependencies:
-      '@sindresorhus/is': 4.6.0
-      '@turf/bbox': 6.5.0
-      dlv: 1.1.3
-      geohashes-between: 2.0.4
-      ngeohash: 0.6.3
-      string-object-formatter: 2.0.0
-      wkt-parser-helper: 4.0.1
-    dev: false
-
   /bcrypt-pbkdf/1.0.2:
     resolution: {integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=}
     dependencies:
@@ -535,22 +503,9 @@ packages:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
 
-  /concat-stream/1.5.2:
-    resolution: {integrity: sha1-cIl4Yk2FavQaWnQd790mHadSwmY=}
-    engines: {'0': node >= 0.8}
-    dependencies:
-      inherits: 2.0.4
-      readable-stream: 2.0.6
-      typedarray: 0.0.6
-    dev: false
-
   /core-util-is/1.0.2:
     resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
     dev: true
-
-  /core-util-is/1.0.3:
-    resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
-    dev: false
 
   /coveralls/3.1.0:
     resolution: {integrity: sha512-sHxOu2ELzW8/NC1UP5XVLbZDzO4S3VxfFye3XYCznopHy02YjNkHcj5bKaVw2O7hVaBdBjEdQGpie4II1mWhuQ==}
@@ -614,10 +569,6 @@ packages:
     dependencies:
       path-type: 4.0.0
     dev: true
-
-  /dlv/1.1.3:
-    resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
-    dev: false
 
   /doctrine/3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -1097,18 +1048,6 @@ packages:
     resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
     dev: true
 
-  /geohashes-between/2.0.4:
-    resolution: {integrity: sha512-3oSNRNnSMgwUGUPnpFr8V+udun7bQSFGcSry/dfpUq+mlulb3Facy+oTyfs6+spEUwKVzYmSbeh6FVd5Oxxw/g==}
-    engines: {node: '>=10'}
-    dependencies:
-      '@turf/bearing': 6.5.0
-      '@turf/helpers': 6.5.0
-      bbox-helper-functions: 3.2.2
-      lineclip: 1.1.5
-      ngeohash: 0.6.3
-      number-helper-functions: 4.1.1
-    dev: false
-
   /get-func-name/2.0.0:
     resolution: {integrity: sha1-6td0q+5y4gQJQzoGY2YCPdaIekE=}
     dev: true
@@ -1285,6 +1224,7 @@ packages:
 
   /inherits/2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+    dev: true
 
   /is-binary-path/2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
@@ -1329,10 +1269,6 @@ packages:
   /is-typedarray/1.0.0:
     resolution: {integrity: sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=}
     dev: true
-
-  /isarray/1.0.0:
-    resolution: {integrity: sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=}
-    dev: false
 
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
@@ -1532,6 +1468,7 @@ packages:
 
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
+    dev: true
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -1697,10 +1634,6 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /process-nextick-args/1.0.7:
-    resolution: {integrity: sha1-FQ4gt1ZZCtP5EJPyWk8q2L/zC6M=}
-    dev: false
-
   /progress/2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
@@ -1723,17 +1656,6 @@ packages:
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
-
-  /readable-stream/2.0.6:
-    resolution: {integrity: sha1-j5A0HmilPMySh4jaz80Rs265t44=}
-    dependencies:
-      core-util-is: 1.0.3
-      inherits: 2.0.4
-      isarray: 1.0.0
-      process-nextick-args: 1.0.7
-      string_decoder: 0.10.31
-      util-deprecate: 1.0.2
-    dev: false
 
   /readdirp/3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
@@ -1913,11 +1835,6 @@ packages:
       tweetnacl: 0.14.5
     dev: true
 
-  /string-object-formatter/2.0.0:
-    resolution: {integrity: sha512-SBU8wxU9hKutrGOjiSjSL/myD9vCzG/+7uFgMBMuNaKhJ/AaHQ5H9FxqvRpmwU9vwgYpK7ZNslpFyWtuKuDjwg==}
-    engines: {node: '>=10'}
-    dev: false
-
   /string-width/4.2.2:
     resolution: {integrity: sha512-XBJbT3N4JhVumXE0eoLU9DCjcaF92KLNqTmFCnG1pf8duUxFGwtP6AD6nkjw9a3IdiRtL3E2w3JDiE/xi3vOeA==}
     engines: {node: '>=8'}
@@ -1926,10 +1843,6 @@ packages:
       is-fullwidth-code-point: 3.0.0
       strip-ansi: 6.0.0
     dev: true
-
-  /string_decoder/0.10.31:
-    resolution: {integrity: sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=}
-    dev: false
 
   /strip-ansi/6.0.0:
     resolution: {integrity: sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==}
@@ -2122,10 +2035,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /typedarray/0.0.6:
-    resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
-    dev: false
-
   /typedoc-plugin-markdown/3.11.14_typedoc@0.22.13:
     resolution: {integrity: sha512-lh47OQvl0079nB18YL9wuTRRhMpjo300SZKfx/xpQY8qG+GINeSxTod95QBELeI0NP81sNtUbemRDrn5nyef4Q==}
     peerDependencies:
@@ -2169,10 +2078,6 @@ packages:
     dependencies:
       punycode: 2.1.1
     dev: true
-
-  /util-deprecate/1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
-    dev: false
 
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
@@ -2257,14 +2162,6 @@ packages:
     resolution: {integrity: sha512-Uw5ooOQxRASHgu6C7GVvUxisKXfSgW4oFlO+aa+PAkgmH89O3CXxEEzNRNtHSqtXFTl0nAC1uYj0GMSH27uwtQ==}
     dev: true
 
-  /wellknown/0.5.0:
-    resolution: {integrity: sha1-Ca6YcfqCbPCm7BU37wDDedeNcQE=}
-    hasBin: true
-    dependencies:
-      concat-stream: 1.5.2
-      minimist: 1.2.5
-    dev: false
-
   /which/2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
@@ -2272,12 +2169,6 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: true
-
-  /wkt-parser-helper/4.0.1:
-    resolution: {integrity: sha512-cLa2UiT2nyj33dTNxv5mUisARqhlz0G03vgkFMrOFZvUFTkMNzuk9ueFRvfhVZG+5vivkd9d6bqch1taK8erpA==}
-    dependencies:
-      wellknown: 0.5.0
-    dev: false
 
   /word-wrap/1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}

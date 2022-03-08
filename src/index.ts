@@ -4,9 +4,9 @@ import {LineString, Position} from '@turf/helpers';
 import {getGeohashNeighborInDirection, getDirectionsInBearing} from './helpers/directions';
 import {getBearingBetweenPoints} from './helpers/bearing';
 import {lineCrossesBBox} from './helpers/clip';
-import {getGeohashBBox} from 'bbox-helper-functions';
 import {validatePrecision, validateSamePrecisionGeohashes} from './helpers/validator';
 import {cloneArray} from './helpers/clone';
+import {getGeohashBBox} from './helpers/geohash';
 
 /**
  * Processes a batch of geohashes to see if they intersect a line
