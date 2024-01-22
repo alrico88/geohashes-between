@@ -1,5 +1,6 @@
 import {describe, test, expect} from 'vitest';
-import {getGeohashesBetweenCoordinates, getGeohashesBetweenTwoGeohashes} from '../src';
+import {getBBoxRingGeohashes, getGeohashesBetweenCoordinates, getGeohashesBetweenTwoGeohashes} from '../src';
+import {BBox} from '../src/helpers/geohash';
 
 
 describe('Test getting geohashes in between two geohashes', () => {
@@ -37,5 +38,27 @@ describe('Test coords methods', () => {
 
   test('Test a few more geohashes between', () => {
     expect(getGeohashesBetweenCoordinates([-5.646972656250001, 36.679433365517774], [-5.52103918210534, 36.67588866176514], 5)).toStrictEqual(['eyebx', 'eys08', 'eys09', 'eys0d']);
+  });
+});
+
+describe('Test BBox methods', () => {
+  test('Should return more than one geohash for a valid BBox that encompasses more than one geohash', () => {
+    const bbox: BBox = [-4.702112, 39.287546, -2.76849, 41.286062];
+
+    expect(getBBoxRingGeohashes(bbox, 7).length).toBeGreaterThan(0);
+  });
+
+  test('Should return only one geohash is BBox is fully inside a geohash', () => {
+    const bbox: BBox = [-4.702112, 39.287546, -2.76849, 41.286062];
+
+    expect(getBBoxRingGeohashes(bbox, 1).length).toStrictEqual(1);
+  });
+
+  test('Resulting geohashes should have no duplicates', () => {
+    const bbox: BBox = [-4.702112, 39.287546, -2.76849, 41.286062];
+    const list = getBBoxRingGeohashes(bbox, 7);
+    const uniques = [...new Set(list)];
+
+    expect(uniques.length).toStrictEqual(list.length);
   });
 });

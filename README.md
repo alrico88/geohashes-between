@@ -43,26 +43,52 @@ const list = getGeohashesBetweenCoordinates(pointA, pointB, 6);
 
 ### Functions
 
+- [getBBoxRingGeohashes](#getbboxringgeohashes)
 - [getGeohashesBetweenCoordinates](#getgeohashesbetweencoordinates)
 - [getGeohashesBetweenTwoGeohashes](#getgeohashesbetweentwogeohashes)
 
 ## Functions
 
-### getGeohashesBetweenCoordinates
+### getBBoxRingGeohashes
 
-▸ **getGeohashesBetweenCoordinates**(`pointA`: Position, `pointB`: Position, `precision`: _number_): _string_[]
+▸ **getBBoxRingGeohashes**(`bbox`, `precision`): `string`[]
 
-Finds the geohashes of a given precision between two coordinates
+Find the geohashes of a given precision that form a BBox ring
 
 #### Parameters
 
-| Name        | Type     | Description                    |
-| :---------- | :------- | :----------------------------- |
-| `pointA`    | Position | Starting coordinate [lon, lat] |
-| `pointB`    | Position | End coordinate [lon, lat]      |
-| `precision` | _number_ | Desired geohash precision      |
+| Name        | Type     | Description                         |
+| :---------- | :------- | :---------------------------------- |
+| `bbox`      | `BBox`   | The BBox to find the ring geohashes |
+| `precision` | `number` | Precision for the geohashes         |
 
-**Returns:** _string_[]
+#### Returns
+
+`string`[]
+
+Geohashes list
+
+---
+
+### getGeohashesBetweenCoordinates
+
+▸ **getGeohashesBetweenCoordinates**(`pointA`, `pointB`, `precision`): `string`[]
+
+Finds the geohashes of a given precision between two coordinates
+
+**`export`**
+
+#### Parameters
+
+| Name        | Type       | Description                    |
+| :---------- | :--------- | :----------------------------- |
+| `pointA`    | `Position` | Starting coordinate [lon, lat] |
+| `pointB`    | `Position` | End coordinate [lon, lat]      |
+| `precision` | `number`   | Desired geohash precision      |
+
+#### Returns
+
+`string`[]
 
 The list of geohashes between those coords
 
@@ -70,19 +96,23 @@ The list of geohashes between those coords
 
 ### getGeohashesBetweenTwoGeohashes
 
-▸ **getGeohashesBetweenTwoGeohashes**(`geohashStart`: _string_, `geohashEnd`: _string_, `includeStartEnd?`: _boolean_): _string_[]
+▸ **getGeohashesBetweenTwoGeohashes**(`geohashStart`, `geohashEnd`, `includeStartEnd?`): `string`[]
 
 Gets a list of geohashes between a starting and end geohash
 Both geohashes should be of the same precision
 
+**`export`**
+
 #### Parameters
 
-| Name              | Type      | Default value | Description                                                         |
-| :---------------- | :-------- | :------------ | :------------------------------------------------------------------ |
-| `geohashStart`    | _string_  | -             | The starting geohash                                                |
-| `geohashEnd`      | _string_  | -             | The ending geohash                                                  |
-| `includeStartEnd` | _boolean_ | false         | Whether to include starting and ending geohash in the returned list |
+| Name              | Type      | Default value | Description          |
+| :---------------- | :-------- | :------------ | :------------------- |
+| `geohashStart`    | `string`  | `undefined`   | The starting geohash |
+| `geohashEnd`      | `string`  | `undefined`   | The ending geohash   |
+| `includeStartEnd` | `boolean` | `false`       | -                    |
 
-**Returns:** _string_[]
+#### Returns
+
+`string`[]
 
 The list of geohashes between start and end
