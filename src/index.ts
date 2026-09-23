@@ -5,7 +5,6 @@ import {getGeohashNeighborInDirection, getDirectionsInBearing} from './helpers/d
 import {getBearingBetweenPoints} from './helpers/bearing';
 import {lineCrossesBBox} from './helpers/clip';
 import {validatePrecision, validateSamePrecisionGeohashes} from './helpers/validator';
-import {cloneArray} from './helpers/clone';
 import {BBox, getGeohashBBox} from './helpers/geohash';
 
 /**
@@ -43,35 +42,35 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
   const startingGeohash = ngeohash.encode(pointA[1], pointA[0], precision);
   const endingGeohash = ngeohash.encode(pointB[1], pointB[0], precision);
 
-  const geohashesAlong: Record<string, boolean> = {
-    [startingGeohash]: true,
-  };
+  const geohashesAlong = new Set<string>([startingGeohash]);
 
   let latestBatch: string[] = neighborsToLookFor.map((direction) => getGeohashNeighborInDirection(startingGeohash, direction));
+  const discovered = new Set<string>([startingGeohash, ...latestBatch]);
 
-  while (geohashesAlong[endingGeohash] !== true) {
+  while (!geohashesAlong.has(endingGeohash)) {
     const batchResults = processBatch(lineString, latestBatch);
-
-    const doNotCheckAgain: string[] = cloneArray(latestBatch);
-
     const nextBatch: Set<string> = new Set();
 
     batchResults.forEach((geohash) => {
-      geohashesAlong[geohash] = true;
+      geohashesAlong.add(geohash);
 
       neighborsToLookFor.forEach((direction) => {
         const lookFor = getGeohashNeighborInDirection(geohash, direction);
 
-        if (!doNotCheckAgain.includes(lookFor)) {
+        if (!discovered.has(lookFor)) {
+          discovered.add(lookFor);
           nextBatch.add(lookFor);
         }
       });
     });
 
     latestBatch = Array.from(nextBatch);
+    if (latestBatch.length === 0 && !geohashesAlong.has(endingGeohash)) {
+      throw new Error('Could not find a path to the ending geohash');
+    }
   }
 
-  return Object.keys(geohashesAlong);
+  return Array.from(geohashesAlong);
 }
 
 /**

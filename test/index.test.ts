@@ -32,6 +32,10 @@ describe('Test coords methods', () => {
     expect(getGeohashesBetweenCoordinates([-5.646972656250001, 36.679433365517774], [-5.654869079589845, 36.667592771893275], 5)).toStrictEqual(['eyebx']);
   });
 
+  test('Identical coordinates should return their geohash', () => {
+    expect(getGeohashesBetweenCoordinates([-3.7, 40.4], [-3.7, 40.4], 6)).toHaveLength(1);
+  });
+
   test('Coordinates in different geohashes should return more than one geohash', () => {
     expect(getGeohashesBetweenCoordinates([-5.646972656250001, 36.679433365517774], [-5.595640857204868, 36.68808899697991], 5)).toStrictEqual(['eyebx', 'eys08']);
   });
