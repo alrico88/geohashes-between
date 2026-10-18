@@ -26,6 +26,22 @@ rebuild on changes. GitHub Actions runs the same checks.
 
 ## Usage
 
+Segments are straight lines in longitude/latitude coordinates, not great-circle
+routes. Longitudes are not wrapped: `[179, 10]` to `[-179, 11]` traverses the
+intervening longitudes, not the short route across the antimeridian.
+
+Results include every geohash touched by the closed segment, including cells
+touched only at a corner or endpoint. A segment on a cell edge includes both
+sides. Cells outside longitude `[-180, 180]` and latitude `[-90, 90]` are excluded.
+Cells are returned without duplicates, ordered by first contact; simultaneous
+contacts use ascending longitude, then latitude.
+
+`pointA` and `pointB` must contain finite longitude and latitude values within those
+ranges. Extra dimensions, such as altitude, are ignored. Precision must be an
+integer from 1 to 12. Invalid inputs throw Valibot's `ValiError`.
+Calculations use floating-point arithmetic; extremely
+close corner crossings can still round to simultaneous contacts.
+
 Using `import`
 
 ```javascript
