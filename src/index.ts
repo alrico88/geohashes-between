@@ -1,11 +1,17 @@
-/* eslint-disable no-console */
+import type { LineString, Position } from 'geojson';
 import ngeohash from 'ngeohash';
-import {LineString, Position} from '@turf/helpers';
-import {getGeohashNeighborInDirection, getDirectionsInBearing} from './helpers/directions';
-import {getBearingBetweenPoints} from './helpers/bearing';
-import {lineCrossesBBox} from './helpers/clip';
-import {validatePrecision, validateSamePrecisionGeohashes} from './helpers/validator';
-import {BBox, getGeohashBBox} from './helpers/geohash';
+import { getBearingBetweenPoints } from './helpers/bearing';
+import { lineCrossesBBox } from './helpers/clip';
+import {
+  getDirectionsInBearing,
+  getGeohashNeighborInDirection,
+} from './helpers/directions';
+import type { BBox } from './helpers/geohash';
+import { getGeohashBBox } from './helpers/geohash';
+import {
+  validatePrecision,
+  validateSamePrecisionGeohashes,
+} from './helpers/validator';
 
 /**
  * Processes a batch of geohashes to see if they intersect a line
@@ -15,7 +21,9 @@ import {BBox, getGeohashBBox} from './helpers/geohash';
  * @return {string[]} The list of geohashes that do intersect
  */
 function processBatch(lineString: LineString, latestBatch: string[]): string[] {
-  return latestBatch.filter((geohash) => lineCrossesBBox(lineString, getGeohashBBox(geohash)));
+  return latestBatch.filter((geohash) =>
+    lineCrossesBBox(lineString, getGeohashBBox(geohash)),
+  );
 }
 
 /**
@@ -27,7 +35,11 @@ function processBatch(lineString: LineString, latestBatch: string[]): string[] {
  * @param {number} precision Desired geohash precision
  * @return {string[]} The list of geohashes between those coords
  */
-export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Position, precision: number): string[] {
+export function getGeohashesBetweenCoordinates(
+  pointA: Position,
+  pointB: Position,
+  precision: number,
+): string[] {
   validatePrecision(precision);
 
   const lineString: LineString = {
@@ -44,7 +56,9 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
 
   const geohashesAlong = new Set<string>([startingGeohash]);
 
-  let latestBatch: string[] = neighborsToLookFor.map((direction) => getGeohashNeighborInDirection(startingGeohash, direction));
+  let latestBatch: string[] = neighborsToLookFor.map((direction) =>
+    getGeohashNeighborInDirection(startingGeohash, direction),
+  );
   const discovered = new Set<string>([startingGeohash, ...latestBatch]);
 
   while (!geohashesAlong.has(endingGeohash)) {
@@ -83,15 +97,27 @@ export function getGeohashesBetweenCoordinates(pointA: Position, pointB: Positio
  * @param {boolean} [includeStartEnd=false] Whether to include starting and ending geohash in the returned list
  * @return {string[]} The list of geohashes between start and end
  */
-export function getGeohashesBetweenTwoGeohashes(geohashStart: string, geohashEnd: string, includeStartEnd = false): string[] {
+export function getGeohashesBetweenTwoGeohashes(
+  geohashStart: string,
+  geohashEnd: string,
+  includeStartEnd = false,
+): string[] {
   validateSamePrecisionGeohashes(geohashStart, geohashEnd);
 
   const pointA = ngeohash.decode(geohashStart);
   const pointB = ngeohash.decode(geohashEnd);
 
-  const geohashesBetween = getGeohashesBetweenCoordinates([pointA.longitude, pointA.latitude], [pointB.longitude, pointB.latitude], geohashStart.length);
+  const geohashesBetween = getGeohashesBetweenCoordinates(
+    [pointA.longitude, pointA.latitude],
+    [pointB.longitude, pointB.latitude],
+    geohashStart.length,
+  );
 
-  return includeStartEnd === true ? geohashesBetween : geohashesBetween.filter((geohash) => ![geohashStart, geohashEnd].includes(geohash));
+  return includeStartEnd === true
+    ? geohashesBetween
+    : geohashesBetween.filter(
+        (geohash) => ![geohashStart, geohashEnd].includes(geohash),
+      );
 }
 
 /**
@@ -102,10 +128,7 @@ export function getGeohashesBetweenTwoGeohashes(geohashStart: string, geohashEnd
  * @param {number} precision Precision for the geohashes
  * @returns {string[]} Geohashes list
  */
-export function getBBoxRingGeohashes(
-  bbox: BBox,
-  precision: number
-): string[] {
+export function getBBoxRingGeohashes(bbox: BBox, precision: number): string[] {
   const [minLon, minLat, maxLon, maxLat] = bbox;
   const sw = [minLon, minLat];
   const se = [maxLon, minLat];
@@ -122,7 +145,7 @@ export function getBBoxRingGeohashes(
     const geohashesBetween = getGeohashesBetweenCoordinates(
       start,
       end,
-      precision
+      precision,
     );
 
     geohashesBetween.forEach((geohash) => {

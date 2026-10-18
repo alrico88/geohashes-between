@@ -8,64 +8,62 @@
     "direction"
   ],
   "repository": {
-    "url": "https://github.com/alrico88/geohashes-between"
+    "type": "git",
+    "url": "git+https://github.com/alrico88/geohashes-between.git"
   },
   "sideEffects": false,
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "type": "module",
+  "packageManager": "bun@1.4.3",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "files": [
     "dist",
-    "src"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "start": "pnpm run build -- --watch src",
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "dev": "rslib build --watch",
+    "build": "rslib build",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "lint": "eslint --cache --fix --ignore-path .gitignore --ext .ts,.js src",
-    "prepare": "pnpm run build",
-    "docs": "typedoc src/index.ts --readme README.md --gitRevision master",
-    "coveralls": "vitest run --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pnpm run lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit -p tsconfig.check.json",
+    "lint:package": "bun run build && publint --strict && attw --pack",
+    "check": "bun run lint:package && bun run lint && bun run typecheck && bun run coverage",
+    "prepack": "bun run lint && bun run typecheck && bun run build"
   },
   "devDependencies": {
-    "@types/geojson": "^7946.0.7",
+    "@arethetypeswrong/cli": "0.18.5",
+    "@biomejs/biome": "^2.5.15",
+    "@rslib/core": "^1.0.3",
+    "@types/geojson": "^7946.0.16",
     "@types/ngeohash": "^0.6.4",
-    "@typescript-eslint/eslint-plugin": "^4.17.0",
-    "@typescript-eslint/parser": "^4.17.0",
-    "coveralls": "^3.1.0",
-    "eslint": "^7.23.0",
-    "husky": "^6.0.0",
-    "tslib": "^2.3.1",
-    "tsup": "^5.12.0",
-    "typedoc": "^0.22.13",
-    "typedoc-plugin-markdown": "^3.11.14",
-    "typescript": "^4.6.2",
-    "vite": "^2.8.6",
-    "vitest": "^0.6.0"
+    "@vitest/coverage-v8": "5.0.5",
+    "publint": "0.3.25",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
   },
   "dependencies": {
-    "@turf/bearing": "^6.5.0",
-    "@turf/helpers": "^6.5.0",
+    "@turf/bearing": "^7.4.0",
+    "@turf/helpers": "^7.4.0",
     "lineclip": "^1.1.5",
     "ngeohash": "^0.6.3",
     "number-helper-functions": "^4.1.1"
