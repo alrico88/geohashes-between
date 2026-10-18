@@ -1,4 +1,4 @@
-import {BBox, LineString} from 'geojson';
+import type { BBox, LineString } from 'geojson';
 import lineclip from 'lineclip';
 
 /**

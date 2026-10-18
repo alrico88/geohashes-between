@@ -1,6 +1,7 @@
 import bearing from '@turf/bearing';
-import {bearingToAzimuth, Coord} from '@turf/helpers';
-import {processNumber} from 'number-helper-functions';
+import type { Coord } from '@turf/helpers';
+import { bearingToAzimuth } from '@turf/helpers';
+import { processNumber } from 'number-helper-functions';
 
 /**
  * Gets the bearing between two points

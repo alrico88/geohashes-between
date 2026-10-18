@@ -52,6 +52,9 @@ export function getDirectionsInBearing(bearing: number): Direction[] {
  * @param {Direction} direction The direction in which to look
  * @return {string} The neighbor
  */
- export function getGeohashNeighborInDirection(geohash: string, direction: Direction): string {
+export function getGeohashNeighborInDirection(
+  geohash: string,
+  direction: Direction,
+): string {
   return ngeohash.neighbor(geohash, directions[direction]);
 }

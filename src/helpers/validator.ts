@@ -1,4 +1,4 @@
-import {isBetween} from './directions';
+import { isBetween } from './directions';
 
 /**
  * Validates if precision is a valid precision
@@ -19,7 +19,10 @@ export function validatePrecision(precision: number): void {
  * @param {string} geohashA
  * @param {string} geohashB
  */
-export function validateSamePrecisionGeohashes(geohashA: string, geohashB: string): void {
+export function validateSamePrecisionGeohashes(
+  geohashA: string,
+  geohashB: string,
+): void {
   if (geohashA.length !== geohashB.length) {
     throw new Error('Both geohashes should be of the same length');
   }

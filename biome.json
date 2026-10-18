@@ -1,0 +1,17 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "files": { "includes": ["**", "!**/dist", "!**/coverage", "!bun.lock"] },
+  "formatter": { "indentStyle": "space" },
+  "javascript": { "formatter": { "quoteStyle": "single" } },
+  "linter": {
+    "rules": {
+      "style": {
+        "useBlockStatements": "error",
+        "useImportType": {
+          "level": "error",
+          "options": { "style": "separatedType" }
+        }
+      }
+    }
+  }
+}

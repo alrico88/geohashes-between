@@ -4,9 +4,25 @@ Get a list of geohashes between two geohashes, or between two coordinates.
 
 ## Installation
 
+Requires Node.js 22 or newer. ESM and CommonJS are supported.
+
 Using npm, `npm i geohashes-between`.
 
 Using yarn, `yarn add geohashes-between`.
+
+## Development
+
+Use Bun 1.4.3 (pinned in `package.json`).
+
+```sh
+bun install --frozen-lockfile
+bun run check
+```
+
+`check` builds the package, validates its exports and types with publint and
+Are the Types Wrong, runs Biome and TypeScript, and runs tests with coverage.
+Use `bun run lint:fix` to format and apply lint fixes, or `bun run dev` to
+rebuild on changes. GitHub Actions runs the same checks.
 
 ## Usage
 
