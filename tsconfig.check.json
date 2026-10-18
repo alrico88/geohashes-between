@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": { "rootDir": "." },
-  "include": ["src", "test", "decs.d.ts", "rslib.config.ts", "vitest.config.ts"]
+  "include": ["src", "test", "rslib.config.ts", "vitest.config.ts"]
 }

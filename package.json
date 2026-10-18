@@ -62,10 +62,8 @@
     "vitest": "^5.0.5"
   },
   "dependencies": {
-    "@turf/bearing": "^7.4.0",
-    "@turf/helpers": "^7.4.0",
-    "lineclip": "^1.1.5",
+    "grid-cross": "1.0.0",
     "ngeohash": "^0.6.3",
-    "number-helper-functions": "^4.1.1"
+    "valibot": "^1.5.0"
   }
 }

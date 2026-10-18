@@ -1,30 +1,12 @@
-import type { LineString, Position } from 'geojson';
+import type { Position } from 'geojson';
 import ngeohash from 'ngeohash';
-import { getBearingBetweenPoints } from './helpers/bearing';
-import { lineCrossesBBox } from './helpers/clip';
-import {
-  getDirectionsInBearing,
-  getGeohashNeighborInDirection,
-} from './helpers/directions';
 import type { BBox } from './helpers/geohash';
-import { getGeohashBBox } from './helpers/geohash';
+import { traverseGeohashes } from './helpers/traversal';
 import {
+  validatePosition,
   validatePrecision,
   validateSamePrecisionGeohashes,
 } from './helpers/validator';
-
-/**
- * Processes a batch of geohashes to see if they intersect a line
- *
- * @param {LineString} lineString A LineString to check if any of the batches geohashes crosses
- * @param {string[]} latestBatch The batch of geohashes to find neighbors of
- * @return {string[]} The list of geohashes that do intersect
- */
-function processBatch(lineString: LineString, latestBatch: string[]): string[] {
-  return latestBatch.filter((geohash) =>
-    lineCrossesBBox(lineString, getGeohashBBox(geohash)),
-  );
-}
 
 /**
  * Finds the geohashes of a given precision between two coordinates
@@ -42,49 +24,11 @@ export function getGeohashesBetweenCoordinates(
 ): string[] {
   validatePrecision(precision);
 
-  const lineString: LineString = {
-    type: 'LineString',
-    coordinates: [pointA, pointB],
-  };
+  validatePosition(pointA);
 
-  const bearing = getBearingBetweenPoints(pointA, pointB);
+  validatePosition(pointB);
 
-  const neighborsToLookFor = getDirectionsInBearing(bearing);
-
-  const startingGeohash = ngeohash.encode(pointA[1], pointA[0], precision);
-  const endingGeohash = ngeohash.encode(pointB[1], pointB[0], precision);
-
-  const geohashesAlong = new Set<string>([startingGeohash]);
-
-  let latestBatch: string[] = neighborsToLookFor.map((direction) =>
-    getGeohashNeighborInDirection(startingGeohash, direction),
-  );
-  const discovered = new Set<string>([startingGeohash, ...latestBatch]);
-
-  while (!geohashesAlong.has(endingGeohash)) {
-    const batchResults = processBatch(lineString, latestBatch);
-    const nextBatch: Set<string> = new Set();
-
-    batchResults.forEach((geohash) => {
-      geohashesAlong.add(geohash);
-
-      neighborsToLookFor.forEach((direction) => {
-        const lookFor = getGeohashNeighborInDirection(geohash, direction);
-
-        if (!discovered.has(lookFor)) {
-          discovered.add(lookFor);
-          nextBatch.add(lookFor);
-        }
-      });
-    });
-
-    latestBatch = Array.from(nextBatch);
-    if (latestBatch.length === 0 && !geohashesAlong.has(endingGeohash)) {
-      throw new Error('Could not find a path to the ending geohash');
-    }
-  }
-
-  return Array.from(geohashesAlong);
+  return traverseGeohashes(pointA, pointB, precision);
 }
 
 /**
